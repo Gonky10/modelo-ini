@@ -12,9 +12,9 @@ function Seccion({ id, titulo, icono, extraInicio }) {
 
 
   useEffect(() => {
-    console.log(path.src_general + '/api/secciones/' + id);
+    console.log('/api/secciones/' + id);
     
-    fetch(path.src_back_end + '/api/secciones/' + id)
+    fetch('/api/secciones/' + id)
       .then(res => res.json())
       .then(data => {
         console.log("acaaaaaa: ", data);
