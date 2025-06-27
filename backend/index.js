@@ -13,11 +13,6 @@ app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hola desde Node.js!' });
 });
 
-app.use(express.static(path.join(__dirname, '../frontend/build')));
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
-});
 
 
 app.get('/api/secciones/:id', async (req, res) => {
@@ -69,7 +64,16 @@ sequelize.authenticate()
       console.log('Secciones iniciales creadas.');
     }
   })
-  app.listen(PORT, '0.0.0.0', () => {
+
+  
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
+
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Servidor corriendo en todas las interfaces en el puerto ${PORT}`);
   })  
   .catch(err => console.error('Error:', err));
