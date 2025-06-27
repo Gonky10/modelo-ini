@@ -4,7 +4,7 @@ const app = express();
 const PORT = 3001;
 const sequelize = require('./config/db');
 const Seccion = require('./models/seccion.model');
-
+const path = require('path');
 
 app.use(cors());
 app.use(express.json());
@@ -12,6 +12,13 @@ app.use(express.json());
 app.get('/api/hello', (req, res) => {
   res.json({ message: 'Hola desde Node.js!' });
 });
+
+app.use(express.static(path.join(__dirname, '../frontend/build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../frontend/build/index.html'));
+});
+
 
 app.get('/api/secciones/:id', async (req, res) => {
   try {
@@ -21,10 +28,6 @@ app.get('/api/secciones/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Error al obtener la sección' });
   }
-});
-
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
 sequelize.authenticate()
@@ -66,7 +69,7 @@ sequelize.authenticate()
       console.log('Secciones iniciales creadas.');
     }
   })
-  .then(() => {
-    app.listen(3001, '0.0.0.0', () => console.log('Servidor corriendo en todas las interfaces'));
-  })
+  app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Servidor corriendo en todas las interfaces en el puerto ${PORT}`);
+  })  
   .catch(err => console.error('Error:', err));
