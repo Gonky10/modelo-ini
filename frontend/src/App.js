@@ -12,9 +12,8 @@ function Seccion({ id, titulo, icono, extraInicio }) {
 
 
   useEffect(() => {
-    console.log('/api/secciones/' + id);
     
-    fetch('/api/secciones/' + id)
+    fetch(path.src_url + id)
       .then(res => res.json())
       .then(data => {
         console.log("acaaaaaa: ", data);
